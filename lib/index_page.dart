@@ -3,6 +3,8 @@ import 'package:weibo_international_flutter/discover_page.dart';
 import 'package:weibo_international_flutter/home_page.dart';
 import 'package:weibo_international_flutter/message_page.dart';
 
+import 'constant/constant.dart';
+
 class IndexPage extends StatefulWidget {
   @override
   _IndexPageState createState() => _IndexPageState();
@@ -11,7 +13,7 @@ class IndexPage extends StatefulWidget {
 class _IndexPageState extends State<IndexPage> {
   int currentIndex = 0;
   var tabImages;
-  var title = new Text("");
+  var title = "";
   var pages = [HomePage(), DiscoverPage(), MessagePage()];
   List<BottomNavigationBarItem> bottomTabs;
 
@@ -38,23 +40,24 @@ class _IndexPageState extends State<IndexPage> {
   void initData() {
     tabImages = [
       [
-        getTabImage('assets/images/tabbar_home.png'),
-        getTabImage('assets/images/tabbar_home_highlighted.png')
+        getTabImage(Constant.ASSETS_IMG + 'tabbar_home.png'),
+        getTabImage(Constant.ASSETS_IMG + 'tabbar_home_highlighted.png')
       ],
       [
-        getTabImage('assets/images/tabbar_discover.png'),
-        getTabImage('assets/images/tabbar_discover_highlighted.png')
+        getTabImage(Constant.ASSETS_IMG + 'tabbar_discover.png'),
+        getTabImage(Constant.ASSETS_IMG + 'tabbar_discover_highlighted.png')
       ],
       [
-        getTabImage('assets/images/tabbar_message_center.png'),
-        getTabImage('assets/images/tabbar_message_center_highlighted.png')
+        getTabImage(Constant.ASSETS_IMG + 'tabbar_message_center.png'),
+        getTabImage(
+            Constant.ASSETS_IMG + 'tabbar_message_center_highlighted.png')
       ],
     ];
 
     bottomTabs = [
-      BottomNavigationBarItem(icon: getTabIcon(0), title: title),
-      BottomNavigationBarItem(icon: getTabIcon(1), title: title),
-      BottomNavigationBarItem(icon: getTabIcon(2), title: title),
+      BottomNavigationBarItem(icon: getTabIcon(0), label: title),
+      BottomNavigationBarItem(icon: getTabIcon(1), label: title),
+      BottomNavigationBarItem(icon: getTabIcon(2), label: title),
     ];
   }
 
