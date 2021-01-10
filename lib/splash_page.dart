@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weibo_international_flutter/index_page.dart';
 
 import 'constant/constant.dart';
+import 'login_page.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -19,7 +19,7 @@ class SplashState extends State<SplashPage> {
 
       Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return IndexPage();
+        return LoginPage();
       }));
     });
   }

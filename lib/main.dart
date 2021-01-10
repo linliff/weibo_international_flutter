@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weibo_international_flutter/splash_page.dart';
+
+import 'splash_page.dart';
 
 void main() {
   runApp(MyApp());
