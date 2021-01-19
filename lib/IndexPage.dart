@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'constant/constant.dart';
-import 'discover_page.dart';
-import 'home_page.dart';
-import 'message_page.dart';
-import 'utils/image_source_util.dart';
+import 'Constant.dart';
+import 'DiscoverPage.dart';
+import 'HomePage.dart';
+import 'MessagePage.dart';
+import 'utils/ImageSourceUtil.dart';
 
 class IndexPage extends StatefulWidget {
   @override
