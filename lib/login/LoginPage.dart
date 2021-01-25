@@ -38,7 +38,21 @@ class LoginState extends State<LoginPage> {
     return new Scaffold(
       appBar: _buildAppBar(),
       body: _buildContentView(),
+      floatingActionButton: _buildFloatingLoginButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  FloatingActionButton _buildFloatingLoginButton() {
+    return FloatingActionButton.extended(
+        label: Text("登录/注册",
+            style: TextStyle(
+              fontSize: 16,
+            )),
+        onPressed: () {
+          //todo
+        },
+        backgroundColor: Colors.orange);
   }
 
   AppBar _buildAppBar() {
@@ -67,16 +81,22 @@ class LoginState extends State<LoginPage> {
         padding: EdgeInsets.only(top: 10),
         children: <Widget>[
           _buildHotUserListView(),
-          Container(
-            height: 10,
-            color: GlobalConfig.color_light_gray,
-          ),
+          _buildSplitWidget(),
           _buildHotSearchListView(),
         ],
       ),
     );
   }
 
+  /// 热门用户和热搜之间的间隔
+  Container _buildSplitWidget() {
+    return Container(
+      height: 10,
+      color: GlobalConfig.color_light_gray,
+    );
+  }
+
+  /// 热门用户
   Widget _buildHotUserListView() {
     return Container(
       color: Colors.white,
@@ -92,6 +112,7 @@ class LoginState extends State<LoginPage> {
     );
   }
 
+  /// 热搜词
   Widget _buildHotSearchListView() {
     return Container(
       color: Colors.white,
