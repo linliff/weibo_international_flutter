@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:weibo_international_flutter/model/hotsearch/HotSearchModel.dart';
+import 'package:weibo_international_flutter/model/user/UserListModel.dart';
 
 import 'Api.dart';
 
@@ -12,6 +13,12 @@ class CommonService {
     params["num"] = num;
     Dio().get(Api.HOT_SEARCH_LIST, queryParameters: params).then((response) {
       callback(HotSearchModel.fromJson(response.data));
+    });
+  }
+
+  void getHotUser( Function callback) async {
+    Dio().get(Api.HOT_USER_LIST).then((response) {
+      callback(UserListModel.fromJson(response.data));
     });
   }
 

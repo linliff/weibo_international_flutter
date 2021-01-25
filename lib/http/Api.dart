@@ -26,8 +26,12 @@ class Api {
   // static final String DEFAULT_PROJECT_IMG =
   //     "wanandroid.com/resources/image/pc/default_project_img.jpg";
 
+  static const BASE_URL = 'http://212.64.95.5:8080/hrlweibo/';
 
+  static final String HOT_SEARCH_LIST =
+      "https://v1.alapi.cn/api/new/wbtop"; //热搜列表
 
-  static final String HOT_SEARCH_LIST ="https://v1.alapi.cn/api/new/wbtop?num=10"; //热搜列表
+  static String HOT_USER_LIST =
+      BASE_URL + 'manage/hrlweibo/getWeiBoAtUserList.do'; //获获取热门用户
 
 }

@@ -1,7 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:weibo_international_flutter/GlobalConfig.dart';
 import 'package:weibo_international_flutter/http/CommonService.dart';
 import 'package:weibo_international_flutter/model/hotsearch/HotSearchBean.dart';
 import 'package:weibo_international_flutter/model/hotsearch/HotSearchModel.dart';
+import 'package:weibo_international_flutter/model/user/UserBean.dart';
+import 'package:weibo_international_flutter/model/user/UserListModel.dart';
 
 import '../Constant.dart';
 import '../utils/ImageSourceUtil.dart';
@@ -17,11 +22,14 @@ class LoginState extends State<LoginPage> {
   double iconWidth = 17.0;
   double iconHeight = 17.0;
 
-  List<HotSearchBean> hotSearchList = new List();
+  List<Object> hotSearchList = new List();
+  List<Object> hotUserList = new List();
 
   @override
   void initState() {
     super.initState();
+
+    _loadHotUserData();
     _loadHotSearchData();
   }
 
@@ -29,19 +37,8 @@ class LoginState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: _buildAppBar(),
-      body: _buildListView(),
+      body: _buildContentView(),
     );
-  }
-
-  void _loadHotSearchData() {
-    CommonService().getHotSearch(20, (HotSearchModel _bean) {
-      if (_bean.data.length > 0) {
-        setState(() {
-          //todo setstate之后页面重新渲染了吗
-          hotSearchList = _bean.data;
-        });
-      }
-    });
   }
 
   AppBar _buildAppBar() {
@@ -63,28 +60,116 @@ class LoginState extends State<LoginPage> {
     );
   }
 
-  ListView _buildListView() {
-    return ListView.builder(
-      padding: EdgeInsets.only(top: 10),
-      shrinkWrap: true,
-      itemCount: hotSearchList.length,
-      itemBuilder: (context, index) =>
-          _buildListItem(hotSearchList[index], index),
+  Widget _buildContentView() {
+    return Container(
+      color: Colors.white,
+      child: ListView(
+        padding: EdgeInsets.only(top: 10),
+        children: <Widget>[
+          _buildHotUserListView(),
+          Container(
+            height: 10,
+            color: GlobalConfig.color_light_gray,
+          ),
+          _buildHotSearchListView(),
+        ],
+      ),
     );
   }
 
-  Widget _buildListItem(HotSearchBean searchWord, int index) => Container(
+  Widget _buildHotUserListView() {
+    return Container(
+      color: Colors.white,
+      child: ListView.builder(
+        shrinkWrap: true,
+        //解决无限高度问题
+        physics: NeverScrollableScrollPhysics(),
+        //禁用滑动事件
+        itemCount: hotUserList.length,
+        itemBuilder: (context, index) =>
+            _buildHotUserListItem(hotUserList[index], index),
+      ),
+    );
+  }
+
+  Widget _buildHotSearchListView() {
+    return Container(
+      color: Colors.white,
+      child: ListView.builder(
+        padding: EdgeInsets.only(top: 10, bottom: 20),
+        shrinkWrap: true,
+        //解决无限高度问题
+        physics: NeverScrollableScrollPhysics(),
+        //禁用滑动事件
+        itemCount: hotSearchList.length,
+        itemBuilder: (context, index) =>
+            _buildHotWordListItem(hotSearchList[index], index),
+      ),
+    );
+  }
+
+  Widget _buildHotUserListItem(Object user, int index) => Container(
         alignment: Alignment.center,
-        width: 100,
-        height: 50,
-        child: _buildItemContent(searchWord, index),
+        child: _buildHotUserItemContent(user, index),
       );
 
-  Widget _buildItemContent(HotSearchBean searchWord, int index) {
+  Widget _buildHotWordListItem(Object searchWord, int index) => Container(
+        alignment: Alignment.center,
+        child: _buildHotWordItemContent(searchWord, index),
+      );
+
+  Widget _buildHotWordItemContent(Object searchWord, int index) {
     if (searchWord == null) {
       return null;
     }
 
+    if (searchWord is HotSearchBean) {
+      return _getHotItemWidget(searchWord, index - 1);
+    } else if (searchWord is String) {
+      return _getHotTitleWidget(searchWord);
+    }
+    return null;
+  }
+
+  Widget _getHotTitleWidget(String title) {
+    return Column(
+      children: <Widget>[
+        Container(
+          height: 30,
+          child: Center(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Text(title,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      )),
+                ),
+                Spacer(),
+                Container(
+                  margin: EdgeInsets.only(right: 15),
+                  child: Text("全部",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.blue,
+                      )),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          height: 0.5,
+          color: GlobalConfig.color_light_gray,
+        )
+      ],
+    );
+  }
+
+  Widget _getHotItemWidget(HotSearchBean searchWord, int index) {
     Widget hotSearchIcon = _buildItemIconWidget(index);
 
     return Column(
@@ -130,7 +215,121 @@ class LoginState extends State<LoginPage> {
         ),
         Container(
           height: 0.5,
-          color: Color(0xffE6E4E3),
+          color: GlobalConfig.color_light_gray,
+        )
+      ],
+    );
+  }
+
+  Widget _buildHotUserItemContent(Object hotUser, int index) {
+    if (hotUser is UserBean) {
+      return _buildHotUserWidget(hotUser);
+    } else if (hotUser is String) {
+      return _getHotUserTitleWidget(hotUser);
+    }
+
+    return null;
+  }
+
+  Widget _buildHotUserWidget(UserBean userBean) {
+    if (userBean == null) {
+      return null;
+    }
+
+    return Column(
+      children: <Widget>[
+        Container(
+          height: 80,
+          padding: EdgeInsets.only(top: 5, bottom: 5),
+          child: Row(
+            children: <Widget>[
+              Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: CircleAvatar(
+                    //头像半径
+                    radius: 25,
+                    //头像图片 -> NetworkImage网络图片，AssetImage项目资源包图片, FileImage本地存储图片
+                    // backgroundImage: NetworkImage('${userBean.headurl}'),
+                  )),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      '${userBean.nick}',
+                      style: TextStyle(
+                          letterSpacing: 0, color: Colors.black, fontSize: 14),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 4),
+                    child: Text(
+                      '${userBean.decs}',
+                      style: TextStyle(
+                          letterSpacing: 0,
+                          color: Color(0xff666666),
+                          fontSize: 12),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 2),
+                    child: Text(
+                      '粉丝 ' + '${Random().nextInt(10000)}' + '万',
+                      style: TextStyle(
+                          letterSpacing: 0,
+                          color: Color(0xff666666),
+                          fontSize: 12),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 0.5,
+          margin: EdgeInsets.only(left: 80),
+          color: GlobalConfig.color_light_gray,
+          //  margin: EdgeInsets.only(left: 60),
+        ),
+      ],
+    );
+  }
+
+  Widget _getHotUserTitleWidget(String title) {
+    return Column(
+      children: <Widget>[
+        Container(
+          height: 30,
+          child: Center(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Text(title,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      )),
+                ),
+                Spacer(),
+                Container(
+                  margin: EdgeInsets.only(right: 15),
+                  child: Text("全部",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.blue,
+                      )),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          height: 0.5,
+          color: GlobalConfig.color_light_gray,
         )
       ],
     );
@@ -150,7 +349,7 @@ class LoginState extends State<LoginPage> {
         iconWidth,
         iconHeight,
       );
-    } else if (index >= 3 && index <= 7) {
+    } else if (index >= 3 && index <= 8) {
       hotSearchIcon = ImageSourceUtil.getImageByPath(
         Constant.ASSETS_IMG + 'ic_hot_rec.jpg',
         iconWidth,
@@ -163,50 +362,32 @@ class LoginState extends State<LoginPage> {
     }
     return hotSearchIcon;
   }
+
+  //===============网络请求==========
+
+  /// 获取热搜数据
+  void _loadHotSearchData() {
+    CommonService().getHotSearch(20, (HotSearchModel _bean) {
+      if (_bean.data.length > 0) {
+        setState(() {
+          //todo setstate之后页面重新渲染了吗
+          hotSearchList.addAll(_bean.data);
+          hotSearchList.insert(0, "热门搜索");
+        });
+      }
+    });
+  }
+
+  ///  获取热门用户
+  void _loadHotUserData() {
+    CommonService().getHotUser((UserListModel _bean) {
+      if (_bean.data != null) {
+        setState(() {
+          //todo setstate之后页面重新渲染了吗
+          hotUserList.addAll(_bean.data.hotusers);
+          hotUserList.insert(0, "热门微博用户");
+        });
+      }
+    });
+  }
 }
-
-/**
-    import 'package:flutter/material.dart';
-    class BuilderListView extends StatelessWidget {
-    final data = <Color>[
-    Colors.purple[50],
-    Colors.purple[100],
-    Colors.purple[200],
-    Colors.purple[300],
-    Colors.purple[400],
-    Colors.purple[500],
-    Colors.purple[600],
-    Colors.purple[700],
-    Colors.purple[800],
-    Colors.purple[900],
-    ];
-
-    @override
-    Widget build(BuildContext context) {
-    return Container(
-    height: 200,
-    child: ListView.builder(
-    itemCount: data.length,
-    itemBuilder: (context, index) => _buildItem(data[index]),
-    ),
-    );
-    }
-
-    String colorString(Color color) =>
-    "#${color.value.toRadixString(16).padLeft(8, '0').toUpperCase()}";
-
-    Widget _buildItem(Color color) => Container(
-    alignment: Alignment.center,
-    width: 100,
-    height: 50,
-    color: color,
-    child: Text(
-    colorString(color),
-    style: TextStyle(color: Colors.white, shadows: [
-    Shadow(color: Colors.black, offset: Offset(.5, .5), blurRadius: 2)
-    ]),
-    ),
-    );
-    }
-
- **/
