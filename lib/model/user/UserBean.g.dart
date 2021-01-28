@@ -13,6 +13,8 @@ UserBean _$UserBeanFromJson(Map<String, dynamic> json) {
     headurl: json['headurl'] as String,
     decs: json['decs'] as String,
     relation: json['relation'] as int,
+    ismember: json['ismember'] as int,
+    isvertify: json['isvertify'] as int,
   );
 }
 
@@ -22,4 +24,6 @@ Map<String, dynamic> _$UserBeanToJson(UserBean instance) => <String, dynamic>{
       'decs': instance.decs,
       'headurl': instance.headurl,
       'relation': instance.relation,
+      'ismember': instance.ismember,
+      'isvertify': instance.isvertify,
     };

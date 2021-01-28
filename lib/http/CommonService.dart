@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:weibo_international_flutter/model/hotsearch/HotSearchModel.dart';
+import 'package:weibo_international_flutter/model/list/WeiboListModel.dart';
 import 'package:weibo_international_flutter/model/user/UserListModel.dart';
 
 import 'Api.dart';
 
 class CommonService {
-
   void getHotSearch(int num, Function callback) async {
     Map<String, dynamic> params = new Map();
     params["num"] = num;
@@ -16,10 +16,23 @@ class CommonService {
     });
   }
 
-  void getHotUser( Function callback) async {
+  void getHotUser(Function callback) async {
     Dio().get(Api.HOT_USER_LIST).then((response) {
       callback(UserListModel.fromJson(response.data));
     });
+  }
+
+  // void getWeiboList(Function callback) async {
+  //   Dio().get(Api.WEIBO_LIST).then((response) {
+  //     callback(WeiboListModel.fromJson(response.data));
+  //   });
+  // }
+
+  Future<Response> getWeiboList(int page) async {
+    FormData formData = new FormData.fromMap(
+        {"cateid": 4, "paneNum": page, "pageSize": 20, "userId": 123});
+
+    return Dio().post(Api.WEIBO_LIST, data: formData);
   }
 
 //   void getProjectClassify(Function callback) async {

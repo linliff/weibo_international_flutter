@@ -9,8 +9,10 @@ class UserBean {
   String decs;
   String headurl;
   int relation;
+  int ismember;
+  int isvertify;
 
-  UserBean({this.id, this.nick, this.headurl, this.decs, this.relation});
+  UserBean({this.id, this.nick, this.headurl, this.decs, this.relation, this.ismember, this.isvertify});
 
   factory UserBean.fromJson(Map<String, dynamic> json) =>
       _$UserBeanFromJson(json);

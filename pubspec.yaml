@@ -63,6 +63,10 @@ flutter:
     - family: HotSearch
       fonts:
         - asset: assets/fonts/Lobster-Regular.ttf
+
+    - family: noto
+      fonts:
+        - asset: assets/fonts/NotoSansCJKsc-Regular.otf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
