@@ -16,6 +16,20 @@ class IndexPageState extends State<IndexPage> {
   var title = "全部";
   var pages = [HomePage(), DiscoverPage(), MessagePage()];
   List<BottomNavigationBarItem> bottomTabs;
+  PageController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = PageController(initialPage: 0);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +55,27 @@ class IndexPageState extends State<IndexPage> {
             currentIndex: currentIndex,
             onTap: (index) {
               // title = "aaa" + '${index}';
-              _changePage(index);
+              controller.jumpToPage(index);
             },
           ),
-          body: pages[currentIndex],
+          body: _buildBodyWidget(),
         ));
+  }
+
+  Widget _buildBodyWidget() {
+    return PageView.builder(
+      controller: controller,
+      itemCount: pages.length,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return pages[index];
+      },
+      onPageChanged: (index) {
+        setState(() {
+          currentIndex = index;
+        });
+      },
+    );
   }
 
   Drawer _buildLeftDrawer() => Drawer(
@@ -93,10 +123,6 @@ class IndexPageState extends State<IndexPage> {
   }
 
   void _changePage(int index) {
-    if (index != currentIndex) {
-      setState(() {
-        currentIndex = index;
-      });
-    }
+    controller.jumpToPage(index);
   }
 }

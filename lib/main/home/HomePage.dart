@@ -7,7 +7,7 @@ class HomePage extends StatefulWidget {
   WeiboListPageState createState() => WeiboListPageState();
 }
 
-class WeiboListPageState extends State<HomePage> {
+class WeiboListPageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return WeiboListPage(
@@ -16,4 +16,7 @@ class WeiboListPageState extends State<HomePage> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

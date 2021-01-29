@@ -168,26 +168,6 @@ Widget _userInfo(BuildContext context, WeiboItemBean weiboItem) {
   );
 }
 
-Widget mVedioLayout(BuildContext context, String vedioUrl) {
-  // return Container(
-  //   child: Container(
-  //       margin: EdgeInsets.only(left: 15, right: 15),
-  //       child: (vedioUrl.isEmpty || "null" == vedioUrl)
-  //           ? new Container()
-  //           : Container(
-  //           constraints: BoxConstraints(
-  //               maxHeight: 250,
-  //               maxWidth: MediaQuery.of(context).size.width,
-  //               //    maxWidth: 200,
-  //               minHeight: 150,
-  //               minWidth: 150),
-  //           child: VideoWidget(
-  //             vedioUrl,
-  //           ))),
-  // );
-
-  return null;
-}
 
 Widget textContent(String mTextContent, BuildContext context, bool isDetail) {
   if (!isDetail) {
