@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:weibo_international_flutter/Constant.dart';
 import 'package:weibo_international_flutter/main/DiscoverPage.dart';
-import 'package:weibo_international_flutter/main/home/HomePage.dart';
 import 'package:weibo_international_flutter/main/MessagePage.dart';
+import 'package:weibo_international_flutter/main/home/HomePage.dart';
 import 'package:weibo_international_flutter/utils/ImageSourceUtil.dart';
 
 class IndexPage extends StatefulWidget {
@@ -29,7 +29,6 @@ class IndexPageState extends State<IndexPage> {
     super.dispose();
     controller.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +79,18 @@ class IndexPageState extends State<IndexPage> {
 
   Drawer _buildLeftDrawer() => Drawer(
         elevation: 1,
-        child: Image.asset(Constant.ASSETS_IMG + 'tabbar_home.png',
-            fit: BoxFit.cover),
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            _getUserHeader(),
+            _getUserItem("收藏", 'ic_shoucang.png'),
+            _getUserItem("点赞", 'ic_dianzan.png'),
+            _getUserItem("浏览记录", 'ic_liulanjilu.png'),
+            _getUserItem("草稿", 'ic_caogao.png'),
+            _getUserItem("设置", 'ic_setting.png'),
+          ],
+        ),
       );
 
   void _initData() {
@@ -122,7 +131,47 @@ class IndexPageState extends State<IndexPage> {
     return tabImages[curIndex][0];
   }
 
-  void _changePage(int index) {
-    controller.jumpToPage(index);
+  Widget _getUserHeader() {
+    return UserAccountsDrawerHeader(
+        margin: EdgeInsets.only(top: 20),
+        accountName: Text('linlif',
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+            )),
+        decoration: BoxDecoration(
+          color: Colors.blue,
+        ),
+        currentAccountPicture: Container(
+            width: 40.0,
+            height: 40.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.transparent,
+              image: DecorationImage(
+                  image: NetworkImage(
+                      'https://img2.doubanio.com/view/photo/l/public/p2509706082.webp'),
+                  fit: BoxFit.cover),
+            )));
+  }
+
+  Widget _getUserItem(String title, String icon) {
+    return Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(left: 15, right: 20, top: 20, bottom: 20),
+            child: ImageSourceUtil.getImageByPath(
+                Constant.ASSETS_IMG + icon, 25, 25),
+          ),
+          Container(
+            child: Text(title,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                )),
+          ),
+        ]);
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:weibo_international_flutter/Constant.dart';
 import 'package:weibo_international_flutter/model/list/WeiboItemBean.dart';
 import 'package:weibo_international_flutter/utils/DataUtil.dart';
+import 'package:weibo_international_flutter/utils/ImageSourceUtil.dart';
 import 'package:weibo_international_flutter/widget/MatchText.dart';
 import 'package:weibo_international_flutter/widget/ParsedText.dart';
 import 'package:weibo_international_flutter/widget/likebutton/LikeButton.dart';
@@ -93,12 +94,12 @@ Widget _userInfo(BuildContext context, WeiboItemBean weiboItem) {
                         right: 0,
                         bottom: 0,
                         child: Container(
-                          child: Image.asset(
+                          child: ImageSourceUtil.getImageByPath(
                             (weiboItem.userInfo.isvertify == 1)
                                 ? Constant.ASSETS_IMG + 'home_vertify.webp'
                                 : Constant.ASSETS_IMG + 'home_vertify2.webp',
-                            width: 15.0,
-                            height: 15.0,
+                            15.0,
+                            15.0,
                           ),
                         ),
                       ),
@@ -126,10 +127,10 @@ Widget _userInfo(BuildContext context, WeiboItemBean weiboItem) {
                       ? new Container()
                       : Container(
                           margin: EdgeInsets.only(left: 5),
-                          child: Image.asset(
+                          child: ImageSourceUtil.getImageByPath(
                             Constant.ASSETS_IMG + 'home_memeber.webp',
-                            width: 15.0,
-                            height: 13.0,
+                            15.0,
+                            13.0,
                           ),
                         ),
                 )
@@ -167,7 +168,6 @@ Widget _userInfo(BuildContext context, WeiboItemBean weiboItem) {
     ),
   );
 }
-
 
 Widget textContent(String mTextContent, BuildContext context, bool isDetail) {
   if (!isDetail) {
@@ -381,12 +381,12 @@ Widget _RePraCom(BuildContext context, WeiboItemBean weiboItem) {
                     color: isLiked ? Colors.deepPurpleAccent : Colors.grey,
                     size: 20,
                   )*/
-                      Image.asset(
+                      ImageSourceUtil.getImageByPath(
                     isLiked
                         ? Constant.ASSETS_IMG + 'ic_home_liked.webp'
                         : Constant.ASSETS_IMG + 'ic_home_like.webp',
-                    width: 21.0,
-                    height: 21.0,
+                    21.0,
+                    21.0,
                   );
                 },
                 likeCount: weiboItem.likeNum,
@@ -424,10 +424,10 @@ Widget _RePraCom(BuildContext context, WeiboItemBean weiboItem) {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Image.asset(
+              ImageSourceUtil.getImageByPath(
                 Constant.ASSETS_IMG + 'ic_home_comment.webp',
-                width: 22.0,
-                height: 22.0,
+                22.0,
+                22.0,
               ),
               Container(
                 child: Text(weiboItem.commentNum.toString() + "",
@@ -452,10 +452,10 @@ Widget _RePraCom(BuildContext context, WeiboItemBean weiboItem) {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Image.asset(
+              ImageSourceUtil.getImageByPath(
                 Constant.ASSETS_IMG + 'ic_home_reweet.png',
-                width: 22.0,
-                height: 22.0,
+                22.0,
+                22.0,
               ),
               Container(
                 child: Text(weiboItem.zhuanfaNum.toString() + "",
