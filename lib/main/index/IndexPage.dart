@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weibo_international_flutter/Constant.dart';
-import 'package:weibo_international_flutter/main/DiscoverPage.dart';
+import 'package:weibo_international_flutter/main/discover/DiscoverPage.dart';
 import 'package:weibo_international_flutter/main/MessagePage.dart';
 import 'package:weibo_international_flutter/main/home/HomePage.dart';
 import 'package:weibo_international_flutter/utils/ImageSourceUtil.dart';
