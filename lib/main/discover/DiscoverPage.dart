@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:weibo_international_flutter/GlobalConfig.dart';
 import 'package:weibo_international_flutter/main/discover/HotSearchWidget.dart';
-import 'package:weibo_international_flutter/main/discover/QushiFourWidget.dart';
-import 'package:weibo_international_flutter/main/discover/QushiPage.dart';
-import 'package:weibo_international_flutter/main/discover/RemenPage.dart';
+import 'package:weibo_international_flutter/main/discover/TrendFourWidget.dart';
+import 'package:weibo_international_flutter/main/discover/TrendPage.dart';
+import 'package:weibo_international_flutter/main/discover/HotPage.dart';
 
 class DiscoverPage extends StatefulWidget {
   @override
