@@ -11,7 +11,7 @@ import 'package:weibo_international_flutter/widget/ParsedText.dart';
 import 'package:weibo_international_flutter/widget/likebutton/LikeButton.dart';
 import 'package:weibo_international_flutter/widget/likebutton/utils/LikeButtonModel.dart';
 
-class HotSearchWidget extends StatelessWidget {
+class TopicWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -83,7 +83,7 @@ class TabBarWidgetState extends State<DiscoverPage> {
           new Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: <Widget>[new HotSearchWidget(), new RemenPage()],
+              children: <Widget>[new TrendPage(), new RemenPage()],
             ),
           )
         ],

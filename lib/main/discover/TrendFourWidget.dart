@@ -10,7 +10,7 @@ import 'package:weibo_international_flutter/widget/ParsedText.dart';
 import 'package:weibo_international_flutter/widget/likebutton/LikeButton.dart';
 import 'package:weibo_international_flutter/widget/likebutton/utils/LikeButtonModel.dart';
 
-class QushiFourWidget extends StatelessWidget {
+class TrendFourWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -174,8 +174,20 @@ class WeiboListPageState extends State<WeiboListPage>
       if (newList != null && newList.length > 0) {
         listData.addAll(newList);
       }
+      if(page == 0){
+        setTopData();
+      }
       haveMoreData = originListLength != listData.length;
     });
+  }
+
+
+  void setTopData() {
+
+    listData.add('TrendFore');
+    listData.add('TrendFore');
+    listData.add('TrendFore');
+
   }
 
   @override
@@ -184,4 +196,5 @@ class WeiboListPageState extends State<WeiboListPage>
     listData?.clear();
     super.dispose();
   }
+
 }

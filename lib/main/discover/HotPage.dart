@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RemenPage extends StatelessWidget {
+class HotPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Center(
