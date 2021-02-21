@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
- import 'package:flutter_hrlweibo/constant/constant.dart';
 import 'package:video_player/video_player.dart';
+import 'package:weibo_international_flutter/Constant.dart';
 
 
 
@@ -19,7 +19,7 @@ class VideoWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    state = _VideoWidgetState();
+    state = VideoWidgetState();
     return state;
   }
 
@@ -33,7 +33,7 @@ class VideoWidgetState extends State<VideoWidget> {
   VoidCallback listener;
   bool _showSeekBar = true;
 
-  _VideoWidgetState() {
+  VideoWidgetState() {
     listener = () {
       if (mounted) {
         setState(() {});

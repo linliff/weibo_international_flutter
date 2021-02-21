@@ -35,6 +35,12 @@ class CommonService {
     return Dio().post(Api.WEIBO_LIST, data: formData);
   }
 
+  Future<Response> getVideoList(int page) async {
+    FormData formData = new FormData.fromMap({"paneNum": page, "pageSize": 20});
+
+    return Dio().post(Api.VIDEO_LIST, data: formData);
+  }
+
 //   void getProjectClassify(Function callback) async {
 //     Dio().get(Api.PROJECT_CLASSIFY, options: _getOptions()).then((response) {
 //       callback(ProjectClassifyModel.fromJson(response.data));

@@ -35,7 +35,7 @@ Widget _iItemWidget(
       children: <Widget>[
         _userInfo(context, weiboItem),
         textContent(weiboItem.content, context, isDetail),
-        _NineGrid(context, weiboItem.picurl),
+        _nineGrid(context, weiboItem.picurl),
         _RetWeetLayout(context, weiboItem, isDetail),
         Visibility(
           visible: !isDetail,
@@ -329,7 +329,7 @@ Widget _RetWeetLayout(
               /*   Text(,
                     style: TextStyle(color: Colors.black, fontSize: 12)),*/
               // mVedioLayout(context, weiboItem.zfVedioUrl),
-              _NineGrid(context, weiboItem.zfPicurl),
+              _nineGrid(context, weiboItem.zfPicurl),
             ],
           )),
     );
@@ -504,7 +504,7 @@ Future<bool> onLikeButtonTapped(bool isLiked, WeiboItemBean weiboItem) async {
 }
 
 //九宫格图片布局
-Widget _NineGrid(BuildContext context, List<String> picUrlList) {
+Widget _nineGrid(BuildContext context, List<String> picUrlList) {
   List<String> picList = picUrlList;
   //如果包含九宫格图片
   if (picList != null && picList.length > 0) {

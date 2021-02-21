@@ -1,5 +1,4 @@
 class Api {
-
   static const BASE_URL = 'http://212.64.95.5:8080/hrlweibo/';
 
   static final String HOT_SEARCH_LIST =
@@ -9,5 +8,8 @@ class Api {
       BASE_URL + 'manage/hrlweibo/getWeiBoAtUserList.do'; //获获取热门用户
 
   static String WEIBO_LIST = BASE_URL + 'manage/hrlweibo/list.do'; // 获取首页微博列表
+
+  static String VIDEO_LIST =
+      BASE_URL + 'manage/hrlvedio/recommendlist.do'; //视频-推荐列表
 
 }

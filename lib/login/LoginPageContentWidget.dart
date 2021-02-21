@@ -227,7 +227,7 @@ class LoginPageContentWidget extends StatelessWidget {
                     //头像半径
                     radius: 25,
                     //头像图片 -> NetworkImage网络图片，AssetImage项目资源包图片, FileImage本地存储图片
-                    // backgroundImage: NetworkImage('${userBean.headurl}'),
+                    backgroundImage: NetworkImage(userBean.headurl),
                   )),
               Column(
                 mainAxisSize: MainAxisSize.min,

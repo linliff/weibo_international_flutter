@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weibo_international_flutter/GlobalConfig.dart';
+import 'package:weibo_international_flutter/http/CommonService.dart';
 import 'package:weibo_international_flutter/main/discover/HotSearchWidget.dart';
 import 'package:weibo_international_flutter/main/discover/TrendFourWidget.dart';
 import 'package:weibo_international_flutter/main/discover/TrendPage.dart';
@@ -83,7 +84,14 @@ class TabBarWidgetState extends State<DiscoverPage> {
           new Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: <Widget>[new TrendPage(), new RemenPage()],
+              children: <Widget>[
+                new TrendPage(
+                  request: (page) {
+                    return CommonService().getVideoList(page);
+                  },
+                ),
+                new HotPage()
+              ],
             ),
           )
         ],

@@ -1,6 +1,14 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-class TrendPage extends StatelessWidget {
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:weibo_international_flutter/main/discover/TrendVideoWidget.dart';
+import 'package:weibo_international_flutter/model/discover/video/VideoModel.dart';
+import 'package:weibo_international_flutter/widget/EmptyHolder.dart';
+
+typedef Future<Response> RequestData(int page);
+
+class TrendPage extends StatefulWidget {
   final RequestData request;
   final String emptyMsg;
   final bool keepAlive;
@@ -8,10 +16,10 @@ class TrendPage extends StatelessWidget {
 
   TrendPage(
       {Key key,
-        @required this.request,
-        this.emptyMsg,
-        this.selfControl = true,
-        this.keepAlive = false})
+      @required this.request,
+      this.emptyMsg,
+      this.selfControl = true,
+      this.keepAlive = false})
       : super(key: key);
 
   @override
@@ -22,7 +30,7 @@ class TrendPage extends StatelessWidget {
 
 class TrendPageState extends State<TrendPage>
     with AutomaticKeepAliveClientMixin {
-  List<WeiboItemBean> listData = List();
+  List<Object> listData = List();
   int listDataPage = -1;
   var haveMoreData = true;
   ListView listView;
@@ -45,9 +53,8 @@ class TrendPageState extends State<TrendPage>
 
   @override
   Widget build(BuildContext context) {
-    var itemCount = ((null == listData) ? 0 : listData.length) +
-        (null == widget.header ? 0 : 1) +
-        (haveMoreData ? 1 : 0);
+    var itemCount =
+        ((null == listData) ? 0 : listData.length) + (haveMoreData ? 1 : 0);
     if (itemCount <= 0) {
       return EmptyHolder(
         msg: (widget.emptyMsg == null)
@@ -60,10 +67,7 @@ class TrendPageState extends State<TrendPage>
         itemCount: itemCount,
         controller: getControllerForListView(),
         itemBuilder: (context, index) {
-          if (index == 0 && null != widget.header) {
-            return widget.header;
-          } else if (index - (null == widget.header ? 0 : 1) >=
-              listData.length) {
+          if (index >= listData.length) {
             return _buildLoadMoreItem();
           } else {
             return _buildListViewItemLayout(context, index);
@@ -109,7 +113,7 @@ class TrendPageState extends State<TrendPage>
         //   );
         // }));
       },
-      child: WeiboItemWidget(listData[index], false),
+      child: TrendVideoWidget(listData[index]),
     );
   }
 
@@ -127,7 +131,6 @@ class TrendPageState extends State<TrendPage>
     listData.clear();
     await _loadNextPage();
   }
-
 
   Future<Null> _loadNextPage() async {
     if (isLoading || !this.mounted) {
@@ -158,13 +161,22 @@ class TrendPageState extends State<TrendPage>
   Future<Null> _loadListData(int page) {
     haveMoreData = true;
     return widget.request(page).then((response) {
-      var newList = WeiboListModel.fromJson(response.data).data.list;
+      var newList = VideoModel.fromJson(response.data).data.list;
       var originListLength = listData.length;
       if (newList != null && newList.length > 0) {
         listData.addAll(newList);
       }
+      if (page == 0) {
+        setTopData();
+      }
       haveMoreData = originListLength != listData.length;
     });
+  }
+
+  void setTopData() {
+    listData.add('TrendFore');
+    listData.add('TrendFore');
+    listData.add('TrendFore');
   }
 
   @override
