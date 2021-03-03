@@ -1,21 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:weibo_international_flutter/Constant.dart';
-import 'package:weibo_international_flutter/model/list/WeiboItemBean.dart';
-import 'package:weibo_international_flutter/utils/DataUtil.dart';
-import 'package:weibo_international_flutter/utils/ImageSourceUtil.dart';
-import 'package:weibo_international_flutter/widget/MatchText.dart';
-import 'package:weibo_international_flutter/widget/ParsedText.dart';
-import 'package:weibo_international_flutter/widget/likebutton/LikeButton.dart';
-import 'package:weibo_international_flutter/widget/likebutton/utils/LikeButtonModel.dart';
 
 class TrendFourWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 10),
-      padding: EdgeInsets.only(top: 10, right: 15, left: 15),
+      padding: EdgeInsets.only(top: 10, right: 15, left: 15, bottom: 10),
       color: Colors.white,
       child: Row(
         mainAxisSize: MainAxisSize.min,

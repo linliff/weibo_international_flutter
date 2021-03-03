@@ -16,12 +16,13 @@ class HotSearchWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: 10),
-        padding: EdgeInsets.only(top: 10, right: 15, left: 15),
+        padding: EdgeInsets.only(top: 10, right: 15, left: 15, bottom: 10),
         color: Colors.white,
         child: Column(
           children: [
-            _getTitleWidget('热搜'),
+            _getTitleWidget(),
             Container(
+              margin: EdgeInsets.only(top: 10, bottom: 10),
               height: 0.5,
               color: GlobalConfig.color_light_gray,
             ),
@@ -31,13 +32,13 @@ class HotSearchWidget extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Text(
-                        "疫情地图",
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                        "全球疫情",
+                        style: TextStyle(fontSize: 14, color: Colors.black),
                       ),
                       Spacer(),
                       Container(
                         margin: EdgeInsets.only(right: 15),
-                        child:ImageSourceUtil.getImageByPath(
+                        child: ImageSourceUtil.getImageByPath(
                           Constant.ASSETS_IMG + 'ic_hot_hot.jpg',
                           17,
                           17,
@@ -51,12 +52,65 @@ class HotSearchWidget extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Text(
-                        "疫情地图",
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                        "李现被家里长辈催婚",
+                        style: TextStyle(fontSize: 14, color: Colors.black),
                       ),
+                      Spacer(),
+                      Container(
+                        margin: EdgeInsets.only(right: 15),
+                        child: ImageSourceUtil.getImageByPath(
+                          Constant.ASSETS_IMG + 'ic_hot_hot.jpg',
+                          17,
+                          17,
+                        ),
+                      ),
+                    ],
+                  ),
+                  flex: 1,
+                ),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              height: 0.5,
+            ),
+            Row(
+              children: <Widget>[
+                new Expanded(
+                  child: Row(
+                    children: <Widget>[
                       Text(
-                        "同城",
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                        "赘婿",
+                        style: TextStyle(fontSize: 14, color: Colors.black),
+                      ),
+                      Spacer(),
+                      Container(
+                        margin: EdgeInsets.only(right: 15),
+                        child: ImageSourceUtil.getImageByPath(
+                          Constant.ASSETS_IMG + 'ic_hot_new.jpg',
+                          17,
+                          17,
+                        ),
+                      ),
+                    ],
+                  ),
+                  flex: 1,
+                ),
+                new Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "创造营",
+                        style: TextStyle(fontSize: 14, color: Colors.black),
+                      ),
+                      Spacer(),
+                      Container(
+                        margin: EdgeInsets.only(right: 15),
+                        child: ImageSourceUtil.getImageByPath(
+                          Constant.ASSETS_IMG + 'ic_hot_rec.jpg',
+                          17,
+                          17,
+                        ),
                       ),
                     ],
                   ),
@@ -68,7 +122,7 @@ class HotSearchWidget extends StatelessWidget {
         ));
   }
 
-  Widget _getTitleWidget(String title) {
+  Widget _getTitleWidget() {
     return Column(
       children: <Widget>[
         Container(
@@ -78,9 +132,9 @@ class HotSearchWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Container(
-                  child: Text(title,
+                  child: Text('热搜',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         color: Colors.grey,
                       )),
                 ),
@@ -97,10 +151,6 @@ class HotSearchWidget extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          height: 0.5,
-          color: GlobalConfig.color_light_gray,
-        )
       ],
     );
   }

@@ -1,15 +1,8 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:weibo_international_flutter/Constant.dart';
 import 'package:weibo_international_flutter/GlobalConfig.dart';
-import 'package:weibo_international_flutter/model/list/WeiboItemBean.dart';
-import 'package:weibo_international_flutter/utils/DataUtil.dart';
 import 'package:weibo_international_flutter/utils/ImageSourceUtil.dart';
-import 'package:weibo_international_flutter/widget/MatchText.dart';
-import 'package:weibo_international_flutter/widget/ParsedText.dart';
-import 'package:weibo_international_flutter/widget/likebutton/LikeButton.dart';
-import 'package:weibo_international_flutter/widget/likebutton/utils/LikeButtonModel.dart';
 
 class TopicWidget extends StatelessWidget {
   @override
