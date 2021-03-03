@@ -48,6 +48,9 @@ class HotSearchWidget extends StatelessWidget {
                   ),
                   flex: 1,
                 ),
+                Container(
+                  width: 20,
+                ),
                 new Expanded(
                   child: Row(
                     children: <Widget>[
@@ -71,8 +74,7 @@ class HotSearchWidget extends StatelessWidget {
               ],
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
-              height: 0.5,
+              height: 10,
             ),
             Row(
               children: <Widget>[
@@ -95,6 +97,9 @@ class HotSearchWidget extends StatelessWidget {
                     ],
                   ),
                   flex: 1,
+                ),
+                Container(
+                  width: 20,
                 ),
                 new Expanded(
                   child: Row(
@@ -134,7 +139,7 @@ class HotSearchWidget extends StatelessWidget {
                 Container(
                   child: Text('热搜',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 14,
                         color: Colors.grey,
                       )),
                 ),

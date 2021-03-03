@@ -1,31 +1,50 @@
-
 import 'package:flutter/material.dart';
-import 'package:weibo_international_flutter/Constant.dart';
 import 'package:weibo_international_flutter/GlobalConfig.dart';
-import 'package:weibo_international_flutter/utils/ImageSourceUtil.dart';
 
 class TopicWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: 10),
-        padding: EdgeInsets.only(top: 10, right: 15, left: 15),
+        padding: EdgeInsets.only(top: 10, right: 15, left: 15, bottom: 10),
         color: Colors.white,
         child: Column(
           children: [
-            _getTitleWidget('热门话题'),
+            _getTitleWidget(),
             Container(
+              margin: EdgeInsets.only(top: 10, bottom: 10),
               height: 0.5,
               color: GlobalConfig.color_light_gray,
             ),
             Row(
               children: <Widget>[
                 new Expanded(
-                  child: _getItemWidget("", "平台是否应该..."),
+                  child: _getItemWidget("#货拉拉涉事司机被批捕货拉拉涉事司机被批捕#"),
                   flex: 1,
                 ),
+                Container(
+                  width: 20,
+                ),
                 new Expanded(
-                  child: _getItemWidget("", "贾平凹女儿..."),
+                  child: _getItemWidget("#个税起征点有必要提高吗个税起征点有必要提高吗#"),
+                  flex: 1,
+                ),
+              ],
+            ),
+            Container(
+              height: 10,
+            ),
+            Row(
+              children: <Widget>[
+                new Expanded(
+                  child: _getItemWidget("#女生到年龄就一定要结婚吗#"),
+                  flex: 1,
+                ),
+                Container(
+                  width: 20,
+                ),
+                new Expanded(
+                  child: _getItemWidget("#黑寡妇引进#"),
                   flex: 1,
                 ),
               ],
@@ -34,7 +53,7 @@ class TopicWidget extends StatelessWidget {
         ));
   }
 
-  Widget _getTitleWidget(String title) {
+  Widget _getTitleWidget() {
     return Column(
       children: <Widget>[
         Container(
@@ -44,7 +63,7 @@ class TopicWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Container(
-                  child: Text(title,
+                  child: Text('热门话题',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
@@ -63,30 +82,15 @@ class TopicWidget extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          height: 0.5,
-          color: GlobalConfig.color_light_gray,
-        )
       ],
     );
   }
 
-  Widget _getItemWidget(String imgUrl, content) {
-    return Row(
-      children: <Widget>[
-        Container(
-          child: ImageSourceUtil.getImageByPath(
-            Constant.ASSETS_IMG + 'ic_hot_hot.jpg',
-            17,
-            17,
-          ),
-        ),
-        Spacer(),
-        Text(
-          content,
-          style: TextStyle(fontSize: 12, color: Colors.grey),
-        ),
-      ],
+  Widget _getItemWidget(content) {
+    return Text(
+      content,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(fontSize: 14, color: Colors.black),
     );
   }
 }
