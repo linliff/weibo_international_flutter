@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weibo_international_flutter/Constant.dart';
 import 'package:weibo_international_flutter/model/discover/video/VideoBean.dart';
-import 'package:weibo_international_flutter/utils/ImageSourceUtil.dart';
-import 'package:weibo_international_flutter/widget/MatchText.dart';
-import 'package:weibo_international_flutter/widget/ParsedText.dart';
-import 'package:weibo_international_flutter/widget/likebutton/LikeButton.dart';
-import 'package:weibo_international_flutter/widget/likebutton/utils/LikeButtonModel.dart';
+import 'package:weibo_international_flutter/utils/DataUtil.dart';
 
 class TrendVideoWidget extends StatelessWidget {
   VideoBean videoData;
@@ -20,277 +16,139 @@ class TrendVideoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.only(top: 5),
       color: Colors.white,
-      child: _iItemWidget(context, videoData),
+      child: _getContentItem(context, videoData),
     );
   }
 
-//整个item布局
-  Widget _iItemWidget(BuildContext context, VideoBean videoData) {
+  Widget _getContentItem(BuildContext context, VideoBean videoBean) {
     return Container(
-      margin: EdgeInsets.only(top: 5.0, bottom: 10),
-      color: Colors.white,
-      child: Column(
+      margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          _picWidget(context, videoData.coverimg),
-          _textContent(videoData.introduce, context),
-          _getBottomWidget(context, videoData),
+          Container(
+            margin: EdgeInsets.only(right: 10),
+            height: 100,
+            width: MediaQuery.of(context).size.width * 3 / 8,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width * 3 / 8,
+                  height: 100,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: FadeInImage(
+                      fit: BoxFit.cover,
+                      placeholder:
+                          AssetImage(Constant.ASSETS_IMG + 'img_default.png'),
+                      image: NetworkImage(
+                        videoBean.coverimg,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                    child: new Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: Container(
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+
+                      children: <Widget>[
+                        Spacer(),
+                        Container(
+                          margin: EdgeInsets.only(right: 5),
+                          child: Text(
+                              DateUtil.getFormatTime4(videoBean.videotime)
+                                  .toString(),
+                              style: TextStyle(
+                                  fontSize: 14.0, color: Colors.white)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ))
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  height: 40,
+                  child: Text(videoBean.introduce,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 14.0, color: Colors.black)),
+                  //  margin: EdgeInsets.only(left: 60),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 5),
+                  padding: EdgeInsets.all(2),
+                  child: Text(
+                    videoBean.recommengstr,
+                    style: TextStyle(fontSize: 11, color: Color(0xffFB9213)),
+                  ),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(
+                      //圆角
+                      Radius.circular(5.0),
+                    ),
+                    color: Color(0xffFEF5E2),
+                  ),
+                ),
+                Container(
+                  child: Container(
+                      margin: EdgeInsets.only(top: 2),
+                      child: Text(
+                        "@" + videoBean.username,
+                        style: TextStyle(fontSize: 11, color: Colors.grey),
+                      )),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 2),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                          child: Text(
+                        videoBean.playnum.toString(),
+                        style: TextStyle(fontSize: 13, color: Colors.grey),
+                      )),
+                      Container(
+                          child: Text(
+                        "次观看 · ",
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      )),
+                      Container(
+                          margin: EdgeInsets.only(left: 5),
+                          child: Center(
+                            child: Text(
+                              DateUtil.getFormatTime(
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                          videoBean.createtime))
+                                  .toString(),
+                              style:
+                                  TextStyle(fontSize: 13, color: Colors.grey),
+                            ),
+                          ))
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
         ],
       ),
-    );
-  }
-
-  Widget _textContent(String mTextContent, BuildContext context) {
-    mTextContent = mTextContent.replaceAll("\\n", "\n");
-    return Container(
-        alignment: FractionalOffset.centerLeft,
-        margin: EdgeInsets.only(top: 5.0, left: 15, right: 15, bottom: 10),
-        child: ParsedText(
-          text: mTextContent,
-          style: TextStyle(
-            height: 1.5,
-            fontSize: 15,
-            color: Colors.black,
-          ),
-          parse: <MatchText>[
-            MatchText(
-                pattern: r"\[(@[^:]+):([^\]]+)\]",
-                style: TextStyle(
-                  color: Color(0xff5B778D),
-                  fontSize: 15,
-                ),
-                renderText: ({String str, String pattern}) {
-                  Map<String, String> map = Map<String, String>();
-                  RegExp customRegExp = RegExp(pattern);
-                  Match match = customRegExp.firstMatch(str);
-                  map['display'] = match.group(1);
-                  map['value'] = match.group(2);
-                  print("正则:" + match.group(1) + "---" + match.group(2));
-                  return map;
-                },
-                onTap: (content, contentId) {
-                  // Routes.navigateTo(context, Routes.personinfoPage, params: {
-                  //   'userid': contentId,
-                  // });
-                }),
-            MatchText(
-                pattern: '#.*?#',
-                //       pattern: r"\B#+([\w]+)\B#",
-                //   pattern: r"\[(#[^:]+):([^#]+)\]",
-                style: TextStyle(
-                  color: Color(0xff5B778D),
-                  fontSize: 15,
-                ),
-                renderText: ({String str, String pattern}) {
-                  Map<String, String> map = Map<String, String>();
-
-                  String idStr =
-                      str.substring(str.indexOf(":") + 1, str.lastIndexOf("#"));
-                  String showStr = str
-                      .substring(str.indexOf("#"), str.lastIndexOf("#") + 1)
-                      .replaceAll(":" + idStr, "");
-                  map['display'] = showStr;
-                  map['value'] = idStr;
-                  //   print("正则:"+str+"---"+idStr+"--"+startIndex.toString()+"--"+str.lastIndexOf("#").toString());
-
-                  return map;
-                },
-                onTap: (String content, String contentId) async {
-                  print("id是:" + contentId.toString());
-                  // Routes.navigateTo(
-                  //   context,
-                  //   Routes.topicDetailPage,
-                  //   params: {
-                  //     'mTitle': content.replaceAll("#", ""),
-                  //     'mImg': "",
-                  //     'mReadCount': "123",
-                  //     'mDiscussCount': "456",
-                  //     'mHost': "测试号",
-                  //   },
-                  // );
-                }),
-            MatchText(
-              pattern: '(\\[/).*?(\\])',
-              //       pattern: r"\B#+([\w]+)\B#",
-              //   pattern: r"\[(#[^:]+):([^#]+)\]",
-              style: TextStyle(
-                fontSize: 15,
-              ),
-              renderText: ({String str, String pattern}) {
-                Map<String, String> map = Map<String, String>();
-                print("表情的正则:" + str);
-                String mEmoji2 = "";
-                try {
-                  String mEmoji = str.replaceAll(RegExp('(\\[/)|(\\])'), "");
-                  int mEmojiNew = int.parse(mEmoji);
-                  mEmoji2 = String.fromCharCode(mEmojiNew);
-                } on Exception catch (_) {
-                  mEmoji2 = str;
-                }
-                map['display'] = mEmoji2;
-
-                return map;
-              },
-            ),
-            MatchText(
-                pattern: '全文',
-                //       pattern: r"\B#+([\w]+)\B#",
-                //   pattern: r"\[(#[^:]+):([^#]+)\]",
-                style: TextStyle(
-                  color: Color(0xff5B778D),
-                  fontSize: 15,
-                ),
-                renderText: ({String str, String pattern}) {
-                  Map<String, String> map = Map<String, String>();
-                  map['display'] = '全文';
-                  map['value'] = '全文';
-                  return map;
-                },
-                onTap: (display, value) async {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: new Text("Mentions clicked"),
-                        content: new Text("点击全文了"),
-                        actions: <Widget>[
-                          // usually buttons at the bottom of the dialog
-                          new FlatButton(
-                            child: new Text("Close"),
-                            onPressed: () {},
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }),
-          ],
-        ));
-  }
-
-  Widget _picWidget(BuildContext context, String picUrl) {
-    if (picUrl != null) {
-      return Padding(
-          padding: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 0.0),
-          child: Container(
-            constraints: BoxConstraints(
-                maxHeight: 250, maxWidth: 250, minHeight: 200, minWidth: 200),
-            child: Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Image.network(picUrl, fit: BoxFit.cover),
-            ),
-          ));
-    } else {
-      return Container(
-        height: 0,
-      );
-    }
-  }
-
-  Widget _getBottomWidget(BuildContext context, VideoBean videoData) {
-    return Row(
-      children: <Widget>[
-        new Flexible(
-          child: _getUserWidget(videoData.username, videoData.userheadurl),
-          flex: 1,
-        ),
-        new Flexible(
-          child: _getRePraCom(context, videoData),
-          flex: 1,
-        )
-      ],
-    );
-  }
-
-  Widget _getUserWidget(String name, String headerUrl) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(
-            margin: EdgeInsets.only(left: 15, right: 10),
-            width: 30.0,
-            height: 30.0,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.transparent,
-              image: DecorationImage(
-                  image: NetworkImage(headerUrl), fit: BoxFit.cover),
-            )),
-        Text(
-          name,
-          style: TextStyle(fontSize: 12, color: Colors.grey),
-        ),
-      ],
-    );
-  }
-
-//转发收藏点赞布局
-  Widget _getRePraCom(BuildContext context, VideoBean videoData) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        LikeButton(
-          onTap: (bool isLiked) {},
-          size: 21,
-          circleColor:
-              CircleColor(start: Colors.orange, end: Colors.deepOrange),
-          bubblesColor: BubblesColor(
-            dotPrimaryColor: Colors.orange,
-            dotSecondaryColor: Colors.deepOrange,
-          ),
-          likeBuilder: (bool isLiked) {
-            return ImageSourceUtil.getImageByPath(
-              isLiked
-                  ? Constant.ASSETS_IMG + 'ic_home_liked.webp'
-                  : Constant.ASSETS_IMG + 'ic_home_like.webp',
-              21.0,
-              21.0,
-            );
-          },
-          countBuilder: (int count, bool isLiked, String text) {
-            var color = isLiked ? Colors.orange : Colors.black;
-            Widget result;
-            if (count == 0) {
-              result = Text(
-                '${videoData.playnum}',
-                style: TextStyle(color: color, fontSize: 13),
-              );
-            } else
-              result = Text(
-                text,
-                style: TextStyle(color: color, fontSize: 13),
-              );
-            return result;
-          },
-        ),
-        Container(
-          width: 10,
-        ),
-        ImageSourceUtil.getImageByPath(
-          Constant.ASSETS_IMG + 'ic_home_comment.webp',
-          22.0,
-          22.0,
-        ),
-        Container(
-          child: Text('${videoData.zannum}',
-              style: TextStyle(color: Colors.black, fontSize: 13)),
-          margin: EdgeInsets.only(left: 4.0),
-        ),
-        Container(
-          width: 10,
-        ),
-        ImageSourceUtil.getImageByPath(
-          Constant.ASSETS_IMG + 'ic_discover_share.png',
-          17.0,
-          16.0,
-        ),
-        Container(
-          width: 20,
-        ),
-      ],
     );
   }
 }

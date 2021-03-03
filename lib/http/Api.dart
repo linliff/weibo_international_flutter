@@ -9,7 +9,11 @@ class Api {
 
   static String WEIBO_LIST = BASE_URL + 'manage/hrlweibo/list.do'; // 获取首页微博列表
 
-  static String VIDEO_LIST =
-      BASE_URL + 'manage/hrlvedio/recommendlist.do'; //视频-推荐列表
+  static String DISVOVER_TREND_LIST =
+      BASE_URL + 'manage/hrlvedio/hotlist.do'; //发现-趋势
+
+  static String DISVOVER_HOT_LIST =
+      BASE_URL + 'manage/hrlvedio/recommendlist.do'; //发现-热门
+
 
 }

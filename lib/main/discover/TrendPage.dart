@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:weibo_international_flutter/main/discover/HotSearchWidget.dart';
 import 'package:weibo_international_flutter/main/discover/TopicWidget.dart';
 import 'package:weibo_international_flutter/main/discover/TrendFourWidget.dart';
+import 'package:weibo_international_flutter/main/discover/HotWidget.dart';
 import 'package:weibo_international_flutter/main/discover/TrendVideoWidget.dart';
 import 'package:weibo_international_flutter/model/discover/video/VideoModel.dart';
 import 'package:weibo_international_flutter/widget/EmptyHolder.dart';

@@ -35,10 +35,16 @@ class CommonService {
     return Dio().post(Api.WEIBO_LIST, data: formData);
   }
 
-  Future<Response> getVideoList(int page) async {
+  Future<Response> getDiscoverTrendList(int page) async {
     FormData formData = new FormData.fromMap({"paneNum": page, "pageSize": 20});
 
-    return Dio().post(Api.VIDEO_LIST, data: formData);
+    return Dio().post(Api.DISVOVER_TREND_LIST, data: formData);
+  }
+
+  Future<Response> getDiscoverHotList(int page) async {
+    FormData formData = new FormData.fromMap({"paneNum": page, "pageSize": 20});
+
+    return Dio().post(Api.DISVOVER_HOT_LIST, data: formData);
   }
 
 //   void getProjectClassify(Function callback) async {

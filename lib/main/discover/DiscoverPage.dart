@@ -87,10 +87,14 @@ class TabBarWidgetState extends State<DiscoverPage> {
               children: <Widget>[
                 new TrendPage(
                   request: (page) {
-                    return CommonService().getVideoList(page);
+                    return CommonService().getDiscoverTrendList(page);
                   },
                 ),
-                new HotPage()
+                new HotPage(
+                  request: (page) {
+                    return CommonService().getDiscoverHotList(page);
+                  },
+                )
               ],
             ),
           )
