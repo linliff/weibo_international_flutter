@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:weibo_international_flutter/GlobalConfig.dart';
 import 'package:weibo_international_flutter/http/CommonService.dart';
-import 'package:weibo_international_flutter/main/discover/HotSearchWidget.dart';
-import 'package:weibo_international_flutter/main/discover/TrendFourWidget.dart';
-import 'package:weibo_international_flutter/main/discover/TrendPage.dart';
-import 'package:weibo_international_flutter/main/discover/HotPage.dart';
+import 'package:weibo_international_flutter/main/discover/trend/HotSearchWidget.dart';
+import 'package:weibo_international_flutter/main/discover/trend/TrendFourWidget.dart';
+import 'package:weibo_international_flutter/main/discover/trend/TrendPage.dart';
+import 'package:weibo_international_flutter/main/discover/hot/HotPage.dart';
 
 class DiscoverPage extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class DiscoverPage extends StatefulWidget {
   }
 }
 
-class TabBarWidgetState extends State<DiscoverPage> {
+class TabBarWidgetState extends State<DiscoverPage> with AutomaticKeepAliveClientMixin {
   final List<String> _tabValues = [
     '趋势',
     '热门',
@@ -33,6 +33,9 @@ class TabBarWidgetState extends State<DiscoverPage> {
       });
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   //当整个页面dispose时，记得把控制器也dispose掉，释放内存
   @override
@@ -102,4 +105,5 @@ class TabBarWidgetState extends State<DiscoverPage> {
       ),
     ));
   }
+
 }

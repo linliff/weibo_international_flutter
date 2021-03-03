@@ -41,7 +41,7 @@ class WeiboListPageState extends State<WeiboListPage>
   bool isLoading = false;
 
   @override
-  bool get wantKeepAlive => widget.keepAlive;
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {

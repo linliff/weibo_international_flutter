@@ -1,24 +1,18 @@
-import 'dart:async';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:weibo_international_flutter/main/discover/HotSearchWidget.dart';
-import 'package:weibo_international_flutter/main/discover/TopicWidget.dart';
-import 'package:weibo_international_flutter/main/discover/TrendFourWidget.dart';
-import 'package:weibo_international_flutter/main/discover/HotWidget.dart';
-import 'package:weibo_international_flutter/main/discover/TrendVideoWidget.dart';
+import 'package:weibo_international_flutter/main/discover/hot/HotWidget.dart';
 import 'package:weibo_international_flutter/model/discover/video/VideoModel.dart';
 import 'package:weibo_international_flutter/widget/EmptyHolder.dart';
 
 typedef Future<Response> RequestData(int page);
 
-class TrendPage extends StatefulWidget {
+class HotPage extends StatefulWidget {
   final RequestData request;
   final String emptyMsg;
   final bool keepAlive;
   final bool selfControl;
 
-  TrendPage(
+  HotPage(
       {Key key,
       @required this.request,
       this.emptyMsg,
@@ -28,16 +22,11 @@ class TrendPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return TrendPageState();
+    return HotPageState();
   }
 }
 
-class TrendPageState extends State<TrendPage>
-    with AutomaticKeepAliveClientMixin {
-  final int TYPE_FOUR_WIDGET = 1;
-  final int TYPE_HOT_SEARCH = 2;
-  final int TYPE_HOT_TOPIC = 3;
-
+class HotPageState extends State<HotPage> with AutomaticKeepAliveClientMixin {
   List<Object> listData = List();
   int listDataPage = -1;
   var haveMoreData = true;
@@ -46,7 +35,7 @@ class TrendPageState extends State<TrendPage>
   bool isLoading = false;
 
   @override
-  bool get wantKeepAlive => widget.keepAlive;
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -114,22 +103,10 @@ class TrendPageState extends State<TrendPage>
     }
 
     Object data = listData[index];
-    if (data is int) {
-      if (data == TYPE_FOUR_WIDGET) {
-        return TrendFourWidget();
-      }
-      if (data == TYPE_HOT_SEARCH) {
-        return new HotSearchWidget();
-      }
-
-      if (data == TYPE_HOT_TOPIC) {
-        return new TopicWidget();
-      }
-    }
 
     return InkWell(
       onTap: () {},
-      child: TrendVideoWidget(listData[index]),
+      child: HotWidget(listData[index]),
     );
   }
 
@@ -190,9 +167,9 @@ class TrendPageState extends State<TrendPage>
   }
 
   void setTopData() {
-    listData.insert(0, TYPE_FOUR_WIDGET);
-    listData.insert(1, TYPE_HOT_SEARCH);
-    listData.insert(2, TYPE_HOT_TOPIC);
+    // listData.insert(0, TYPE_FOUR_WIDGET);
+    // listData.insert(1, TYPE_HOT_SEARCH);
+    // listData.insert(2, TYPE_HOT_TOPIC);
   }
 
   @override
