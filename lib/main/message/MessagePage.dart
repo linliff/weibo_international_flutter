@@ -90,7 +90,7 @@ class TabBarWidgetState extends State<MessagePage>
                 new EmptyPage("还没有人在微博中@提到你"),
                 new EmptyPage("你还没有收到评论"),
                 new EmptyPage("你还没有收到赞"),
-                new EmptyPage(""),
+                new EmptyPage("你还没有收到私信"),
               ],
             ),
           )
