@@ -18,17 +18,11 @@ class TopicWidget extends StatelessWidget {
             ),
             Row(
               children: <Widget>[
-                new Expanded(
-                  child: _getItemWidget("#货拉拉涉事司机被批捕货拉拉涉事司机被批捕#"),
-                  flex: 1,
-                ),
+                _getItemWidget("#货拉拉涉事司机被批捕货拉拉涉事司机被批捕#"),
                 Container(
                   width: 20,
                 ),
-                new Expanded(
-                  child: _getItemWidget("#个税起征点有必要提高吗个税起征点有必要提高吗#"),
-                  flex: 1,
-                ),
+                _getItemWidget("#个税起征点有必要提高吗个税起征点有必要提高吗#"),
               ],
             ),
             Container(
@@ -36,17 +30,11 @@ class TopicWidget extends StatelessWidget {
             ),
             Row(
               children: <Widget>[
-                new Expanded(
-                  child: _getItemWidget("#女生到年龄就一定要结婚吗#"),
-                  flex: 1,
-                ),
+                _getItemWidget("#女生到年龄就一定要结婚吗#"),
                 Container(
                   width: 20,
                 ),
-                new Expanded(
-                  child: _getItemWidget("#黑寡妇引进#"),
-                  flex: 1,
-                ),
+                _getItemWidget("#黑寡妇引进#"),
               ],
             ),
           ],
@@ -87,10 +75,13 @@ class TopicWidget extends StatelessWidget {
   }
 
   Widget _getItemWidget(content) {
-    return Text(
-      content,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(fontSize: 14, color: Colors.black),
+    return new Expanded(
+      child: Text(
+        content,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(fontSize: 14, color: Colors.black),
+      ),
+      flex: 1,
     );
   }
 }

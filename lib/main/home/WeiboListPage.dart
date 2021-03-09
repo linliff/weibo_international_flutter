@@ -69,7 +69,7 @@ class WeiboListPageState extends State<WeiboListPage>
     listView = ListView.builder(
         physics: AlwaysScrollableScrollPhysics(),
         itemCount: itemCount,
-        controller: getControllerForListView(),
+        controller: _getControllerForListView(),
         itemBuilder: (context, index) {
           if (index == 0 && null != widget.header) {
             return widget.header;
@@ -86,7 +86,7 @@ class WeiboListPageState extends State<WeiboListPage>
       child: RefreshIndicator(
         child: listView,
         color: Colors.black45,
-        onRefresh: handleRefresh,
+        onRefresh: _handleRefresh,
       ),
     );
     return Scaffold(
@@ -113,14 +113,8 @@ class WeiboListPageState extends State<WeiboListPage>
     }
 
     return InkWell(
-      onTap: () {
-        // Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-        //   return WeiBoDetailPage(
-        //     mModel: model,
-        //   );
-        // }));
-      },
-      child: WeiboItemWidget(listData[index], false),
+      onTap: () {},
+      child: WeiboItemWidget(listData[index]),
     );
   }
 
@@ -133,7 +127,7 @@ class WeiboListPageState extends State<WeiboListPage>
     );
   }
 
-  Future<Null> handleRefresh() async {
+  Future<Null> _handleRefresh() async {
     listDataPage = -1;
     listData.clear();
     await _loadNextPage();
@@ -157,7 +151,7 @@ class WeiboListPageState extends State<WeiboListPage>
     return result;
   }
 
-  ScrollController getControllerForListView() {
+  ScrollController _getControllerForListView() {
     if (widget.selfControl) {
       if (null == _controller) _controller = ScrollController();
       return _controller;

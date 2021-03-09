@@ -1,3 +1,5 @@
+/// API取自 https://github.com/huangruiLearn/flutter_hrlweibo
+
 class Api {
   static const BASE_URL = 'http://212.64.95.5:8080/hrlweibo/';
 

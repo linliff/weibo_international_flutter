@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:weibo_international_flutter/main/discover/hot/HotWidget.dart';
+import 'package:weibo_international_flutter/main/discover/hot/HotItemContentWidget.dart';
 import 'package:weibo_international_flutter/model/discover/video/VideoModel.dart';
 import 'package:weibo_international_flutter/widget/EmptyHolder.dart';
 
 typedef Future<Response> RequestData(int page);
 
+///发现页面的热门tab
 class HotPage extends StatefulWidget {
   final RequestData request;
   final String emptyMsg;
@@ -62,7 +63,7 @@ class HotPageState extends State<HotPage> with AutomaticKeepAliveClientMixin {
     listView = ListView.builder(
         physics: AlwaysScrollableScrollPhysics(),
         itemCount: itemCount,
-        controller: getControllerForListView(),
+        controller: _getControllerForListView(),
         itemBuilder: (context, index) {
           if (index >= listData.length) {
             return _buildLoadMoreItem();
@@ -76,7 +77,7 @@ class HotPageState extends State<HotPage> with AutomaticKeepAliveClientMixin {
       child: RefreshIndicator(
         child: listView,
         color: Colors.black45,
-        onRefresh: handleRefresh,
+        onRefresh: _handleRefresh,
       ),
     );
     return Scaffold(
@@ -102,11 +103,9 @@ class HotPageState extends State<HotPage> with AutomaticKeepAliveClientMixin {
       return Container();
     }
 
-    Object data = listData[index];
-
     return InkWell(
       onTap: () {},
-      child: HotWidget(listData[index]),
+      child: HotItemContentWidget(listData[index]),
     );
   }
 
@@ -119,7 +118,7 @@ class HotPageState extends State<HotPage> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  Future<Null> handleRefresh() async {
+  Future<Null> _handleRefresh() async {
     listDataPage = -1;
     listData.clear();
     await _loadNextPage();
@@ -142,7 +141,7 @@ class HotPageState extends State<HotPage> with AutomaticKeepAliveClientMixin {
     return result;
   }
 
-  ScrollController getControllerForListView() {
+  ScrollController _getControllerForListView() {
     if (widget.selfControl) {
       if (null == _controller) _controller = ScrollController();
       return _controller;
@@ -159,19 +158,10 @@ class HotPageState extends State<HotPage> with AutomaticKeepAliveClientMixin {
       if (newList != null && newList.length > 0) {
         listData.addAll(newList);
       }
-      if (page == 0) {
-        setTopData();
-      }
       haveMoreData = originListLength != listData.length;
     });
   }
-
-  void setTopData() {
-    // listData.insert(0, TYPE_FOUR_WIDGET);
-    // listData.insert(1, TYPE_HOT_SEARCH);
-    // listData.insert(2, TYPE_HOT_TOPIC);
-  }
-
+  
   @override
   void dispose() {
     _controller?.dispose();

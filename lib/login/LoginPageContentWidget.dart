@@ -42,7 +42,7 @@ class LoginPageContentWidget extends StatelessWidget {
     );
   }
 
-  /// 热门用户和热搜之间的间隔
+  // 热门用户和热搜之间的间隔
   Container _buildSplitWidget() {
     return Container(
       height: 10,
@@ -50,7 +50,7 @@ class LoginPageContentWidget extends StatelessWidget {
     );
   }
 
-  /// 热门用户
+  // 热门用户
   Widget _buildHotUserListView() {
     return Container(
       color: Colors.white,
@@ -199,6 +199,7 @@ class LoginPageContentWidget extends StatelessWidget {
   }
 
   //==========热门用户=================
+
   Widget _buildHotUserItemContent(Object hotUser, int index) {
     if (hotUser is UserBean) {
       return _buildHotUserWidget(hotUser);
@@ -224,9 +225,7 @@ class LoginPageContentWidget extends StatelessWidget {
               Container(
                   margin: EdgeInsets.only(left: 15, right: 15),
                   child: CircleAvatar(
-                    //头像半径
                     radius: 25,
-                    //头像图片 -> NetworkImage网络图片，AssetImage项目资源包图片, FileImage本地存储图片
                     backgroundImage: NetworkImage(userBean.headurl),
                   )),
               Column(

@@ -7,12 +7,13 @@ import 'package:weibo_international_flutter/widget/ParsedText.dart';
 import 'package:weibo_international_flutter/widget/likebutton/LikeButton.dart';
 import 'package:weibo_international_flutter/widget/likebutton/utils/LikeButtonModel.dart';
 
-class HotWidget extends StatelessWidget {
+class HotItemContentWidget extends StatelessWidget {
+
   VideoBean videoData;
 
   List<String> pic = new List();
 
-  HotWidget(VideoBean data) {
+  HotItemContentWidget(VideoBean data) {
     videoData = data;
     pic.add(videoData.coverimg);
   }
@@ -26,7 +27,6 @@ class HotWidget extends StatelessWidget {
     );
   }
 
-//整个item布局
   Widget _iItemWidget(BuildContext context, VideoBean videoData) {
     return Container(
       margin: EdgeInsets.only(top: 5.0, bottom: 10),
@@ -70,15 +70,9 @@ class HotWidget extends StatelessWidget {
                   print("正则:" + match.group(1) + "---" + match.group(2));
                   return map;
                 },
-                onTap: (content, contentId) {
-                  // Routes.navigateTo(context, Routes.personinfoPage, params: {
-                  //   'userid': contentId,
-                  // });
-                }),
+                onTap: (content, contentId) {}),
             MatchText(
                 pattern: '#.*?#',
-                //       pattern: r"\B#+([\w]+)\B#",
-                //   pattern: r"\[(#[^:]+):([^#]+)\]",
                 style: TextStyle(
                   color: Color(0xff5B778D),
                   fontSize: 15,
@@ -93,28 +87,11 @@ class HotWidget extends StatelessWidget {
                       .replaceAll(":" + idStr, "");
                   map['display'] = showStr;
                   map['value'] = idStr;
-                  //   print("正则:"+str+"---"+idStr+"--"+startIndex.toString()+"--"+str.lastIndexOf("#").toString());
-
                   return map;
                 },
-                onTap: (String content, String contentId) async {
-                  print("id是:" + contentId.toString());
-                  // Routes.navigateTo(
-                  //   context,
-                  //   Routes.topicDetailPage,
-                  //   params: {
-                  //     'mTitle': content.replaceAll("#", ""),
-                  //     'mImg': "",
-                  //     'mReadCount': "123",
-                  //     'mDiscussCount': "456",
-                  //     'mHost': "测试号",
-                  //   },
-                  // );
-                }),
+                onTap: (String content, String contentId) async {}),
             MatchText(
               pattern: '(\\[/).*?(\\])',
-              //       pattern: r"\B#+([\w]+)\B#",
-              //   pattern: r"\[(#[^:]+):([^#]+)\]",
               style: TextStyle(
                 fontSize: 15,
               ),
@@ -136,8 +113,6 @@ class HotWidget extends StatelessWidget {
             ),
             MatchText(
                 pattern: '全文',
-                //       pattern: r"\B#+([\w]+)\B#",
-                //   pattern: r"\[(#[^:]+):([^#]+)\]",
                 style: TextStyle(
                   color: Color(0xff5B778D),
                   fontSize: 15,
@@ -156,7 +131,6 @@ class HotWidget extends StatelessWidget {
                         title: new Text("Mentions clicked"),
                         content: new Text("点击全文了"),
                         actions: <Widget>[
-                          // usually buttons at the bottom of the dialog
                           new FlatButton(
                             child: new Text("Close"),
                             onPressed: () {},
@@ -215,8 +189,6 @@ class HotWidget extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.transparent,
-
-
               image: DecorationImage(
                   image: NetworkImage(headerUrl), fit: BoxFit.cover),
             )),
@@ -228,7 +200,7 @@ class HotWidget extends StatelessWidget {
     );
   }
 
-//转发收藏点赞布局
+
   Widget _getRePraCom(BuildContext context, VideoBean videoData) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,

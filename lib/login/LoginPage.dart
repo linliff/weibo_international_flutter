@@ -7,6 +7,7 @@ import 'package:weibo_international_flutter/model/hotsearch/HotSearchModel.dart'
 import 'package:weibo_international_flutter/model/user/UserListModel.dart';
 import 'package:weibo_international_flutter/utils/ImageSourceUtil.dart';
 
+/// 引导登录页面，没有实现真正的登录，点击后直接进入首页
 class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -15,6 +16,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginState extends State<LoginPage> {
+
   List<Object> hotSearchList = new List();
   List<Object> hotUserList = new List();
 

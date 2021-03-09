@@ -28,49 +28,11 @@ class HotSearchWidget extends StatelessWidget {
             ),
             Row(
               children: <Widget>[
-                new Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        "全球疫情",
-                        style: TextStyle(fontSize: 14, color: Colors.black),
-                      ),
-                      Spacer(),
-                      Container(
-                        margin: EdgeInsets.only(right: 15),
-                        child: ImageSourceUtil.getImageByPath(
-                          Constant.ASSETS_IMG + 'ic_hot_hot.jpg',
-                          17,
-                          17,
-                        ),
-                      ),
-                    ],
-                  ),
-                  flex: 1,
-                ),
+                _getItemWidget("全球疫情", 'ic_hot_hot.jpg'),
                 Container(
                   width: 20,
                 ),
-                new Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        "李现被家里长辈催婚",
-                        style: TextStyle(fontSize: 14, color: Colors.black),
-                      ),
-                      Spacer(),
-                      Container(
-                        margin: EdgeInsets.only(right: 15),
-                        child: ImageSourceUtil.getImageByPath(
-                          Constant.ASSETS_IMG + 'ic_hot_hot.jpg',
-                          17,
-                          17,
-                        ),
-                      ),
-                    ],
-                  ),
-                  flex: 1,
-                ),
+                _getItemWidget("李现被家里长辈...", 'ic_hot_hot.jpg'),
               ],
             ),
             Container(
@@ -78,49 +40,11 @@ class HotSearchWidget extends StatelessWidget {
             ),
             Row(
               children: <Widget>[
-                new Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        "赘婿",
-                        style: TextStyle(fontSize: 14, color: Colors.black),
-                      ),
-                      Spacer(),
-                      Container(
-                        margin: EdgeInsets.only(right: 15),
-                        child: ImageSourceUtil.getImageByPath(
-                          Constant.ASSETS_IMG + 'ic_hot_new.jpg',
-                          17,
-                          17,
-                        ),
-                      ),
-                    ],
-                  ),
-                  flex: 1,
-                ),
+                _getItemWidget("赘婿", 'ic_hot_new.jpg'),
                 Container(
                   width: 20,
                 ),
-                new Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        "创造营",
-                        style: TextStyle(fontSize: 14, color: Colors.black),
-                      ),
-                      Spacer(),
-                      Container(
-                        margin: EdgeInsets.only(right: 15),
-                        child: ImageSourceUtil.getImageByPath(
-                          Constant.ASSETS_IMG + 'ic_hot_rec.jpg',
-                          17,
-                          17,
-                        ),
-                      ),
-                    ],
-                  ),
-                  flex: 1,
-                ),
+                _getItemWidget("创造营", 'ic_hot_rec.jpg'),
               ],
             ),
           ],
@@ -157,6 +81,29 @@ class HotSearchWidget extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _getItemWidget(String content, String imgName) {
+    return new Expanded(
+      child: Row(
+        children: <Widget>[
+          Text(
+            content,
+            style: TextStyle(fontSize: 14, color: Colors.black),
+          ),
+          Spacer(),
+          Container(
+            margin: EdgeInsets.only(right: 15),
+            child: ImageSourceUtil.getImageByPath(
+              Constant.ASSETS_IMG + imgName,
+              17,
+              17,
+            ),
+          ),
+        ],
+      ),
+      flex: 1,
     );
   }
 }

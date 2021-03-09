@@ -5,6 +5,7 @@ import 'package:weibo_international_flutter/main/discover/DiscoverPage.dart';
 import 'package:weibo_international_flutter/main/home/HomePage.dart';
 import 'package:weibo_international_flutter/utils/ImageSourceUtil.dart';
 
+///首页最外层的壳子
 class IndexPage extends StatefulWidget {
   @override
   IndexPageState createState() => IndexPageState();

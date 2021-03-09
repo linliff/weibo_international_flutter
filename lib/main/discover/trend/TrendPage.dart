@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:weibo_international_flutter/main/discover/trend/HotSearchWidget.dart';
 import 'package:weibo_international_flutter/main/discover/trend/TopicWidget.dart';
 import 'package:weibo_international_flutter/main/discover/trend/TrendFourWidget.dart';
-import 'package:weibo_international_flutter/main/discover/hot/HotWidget.dart';
 import 'package:weibo_international_flutter/main/discover/trend/TrendVideoWidget.dart';
 import 'package:weibo_international_flutter/model/discover/video/VideoModel.dart';
 import 'package:weibo_international_flutter/widget/EmptyHolder.dart';
@@ -73,7 +72,7 @@ class TrendPageState extends State<TrendPage>
     listView = ListView.builder(
         physics: AlwaysScrollableScrollPhysics(),
         itemCount: itemCount,
-        controller: getControllerForListView(),
+        controller: _getControllerForListView(),
         itemBuilder: (context, index) {
           if (index >= listData.length) {
             return _buildLoadMoreItem();
@@ -87,7 +86,7 @@ class TrendPageState extends State<TrendPage>
       child: RefreshIndicator(
         child: listView,
         color: Colors.black45,
-        onRefresh: handleRefresh,
+        onRefresh: _handleRefresh,
       ),
     );
     return Scaffold(
@@ -142,7 +141,7 @@ class TrendPageState extends State<TrendPage>
     );
   }
 
-  Future<Null> handleRefresh() async {
+  Future<Null> _handleRefresh() async {
     listDataPage = -1;
     listData.clear();
     await _loadNextPage();
@@ -165,7 +164,7 @@ class TrendPageState extends State<TrendPage>
     return result;
   }
 
-  ScrollController getControllerForListView() {
+  ScrollController _getControllerForListView() {
     if (widget.selfControl) {
       if (null == _controller) _controller = ScrollController();
       return _controller;
@@ -183,13 +182,13 @@ class TrendPageState extends State<TrendPage>
         listData.addAll(newList);
       }
       if (page == 0) {
-        setTopData();
+        _setTopData();
       }
       haveMoreData = originListLength != listData.length;
     });
   }
 
-  void setTopData() {
+  void _setTopData() {
     listData.insert(0, TYPE_FOUR_WIDGET);
     listData.insert(1, TYPE_HOT_SEARCH);
     listData.insert(2, TYPE_HOT_TOPIC);

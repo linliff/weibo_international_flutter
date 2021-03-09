@@ -12,43 +12,39 @@ import 'package:weibo_international_flutter/widget/likebutton/utils/LikeButtonMo
 
 class WeiboItemWidget extends StatelessWidget {
   WeiboItemBean weiboData;
-  bool isDetail; //是否是详情界面
 
-  WeiboItemWidget(WeiboItemBean data, bool isdetail) {
+  WeiboItemWidget(WeiboItemBean data) {
     weiboData = data;
-    isDetail = isdetail;
   }
 
   @override
   Widget build(BuildContext context) {
-    return _iItemWidget(context, weiboData, isDetail);
+    return _iItemWidget(context, weiboData);
   }
 }
 
-//整个item布局
-Widget _iItemWidget(
-    BuildContext context, WeiboItemBean weiboItem, bool isDetail) {
+Widget _iItemWidget(BuildContext context, WeiboItemBean weiboItem) {
   return Container(
     color: Colors.white,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         _userInfo(context, weiboItem),
-        textContent(weiboItem.content, context, isDetail),
+        _textContent(weiboItem.content, context),
         _nineGrid(context, weiboItem.picurl),
-        _RetWeetLayout(context, weiboItem, isDetail),
+        _retWeetLayout(context, weiboItem),
         Visibility(
-          visible: !isDetail,
+          visible: true,
           child: Column(
             children: <Widget>[
-              _RePraCom(context, weiboItem),
+              _rePraCom(context, weiboItem),
               new Container(
                 height: 12,
                 color: Color(0xffEFEFEF),
               ),
             ],
           ),
-        ) //下划线
+        )
       ],
     ),
   );
@@ -60,11 +56,7 @@ Widget _userInfo(BuildContext context, WeiboItemBean weiboItem) {
     child: Row(
       children: <Widget>[
         InkWell(
-          onTap: () {
-            // Routes.navigateTo(context, Routes.personinfoPage, params: {
-            //   'userid': weiboItem.userInfo.id.toString(),
-            // });
-          },
+          onTap: () {},
           child: Container(
             margin: EdgeInsets.only(right: 5),
             child: weiboItem.userInfo.isvertify == 0
@@ -169,12 +161,10 @@ Widget _userInfo(BuildContext context, WeiboItemBean weiboItem) {
   );
 }
 
-Widget textContent(String mTextContent, BuildContext context, bool isDetail) {
-  if (!isDetail) {
-    //如果字数过长
-    if (mTextContent.length > 150) {
-      mTextContent = mTextContent.substring(0, 148) + ' ... ' + '全文';
-    }
+Widget _textContent(String mTextContent, BuildContext context) {
+  //如果字数过长
+  if (mTextContent.length > 150) {
+    mTextContent = mTextContent.substring(0, 148) + ' ... ' + '全文';
   }
   mTextContent = mTextContent.replaceAll("\\n", "\n");
   return Container(
@@ -203,15 +193,9 @@ Widget textContent(String mTextContent, BuildContext context, bool isDetail) {
                 print("正则:" + match.group(1) + "---" + match.group(2));
                 return map;
               },
-              onTap: (content, contentId) {
-                // Routes.navigateTo(context, Routes.personinfoPage, params: {
-                //   'userid': contentId,
-                // });
-              }),
+              onTap: (content, contentId) {}),
           MatchText(
               pattern: '#.*?#',
-              //       pattern: r"\B#+([\w]+)\B#",
-              //   pattern: r"\[(#[^:]+):([^#]+)\]",
               style: TextStyle(
                 color: Color(0xff5B778D),
                 fontSize: 15,
@@ -226,28 +210,13 @@ Widget textContent(String mTextContent, BuildContext context, bool isDetail) {
                     .replaceAll(":" + idStr, "");
                 map['display'] = showStr;
                 map['value'] = idStr;
-                //   print("正则:"+str+"---"+idStr+"--"+startIndex.toString()+"--"+str.lastIndexOf("#").toString());
-
                 return map;
               },
               onTap: (String content, String contentId) async {
                 print("id是:" + contentId.toString());
-                // Routes.navigateTo(
-                //   context,
-                //   Routes.topicDetailPage,
-                //   params: {
-                //     'mTitle': content.replaceAll("#", ""),
-                //     'mImg': "",
-                //     'mReadCount': "123",
-                //     'mDiscussCount': "456",
-                //     'mHost': "测试号",
-                //   },
-                // );
               }),
           MatchText(
             pattern: '(\\[/).*?(\\])',
-            //       pattern: r"\B#+([\w]+)\B#",
-            //   pattern: r"\[(#[^:]+):([^#]+)\]",
             style: TextStyle(
               fontSize: 15,
             ),
@@ -269,8 +238,6 @@ Widget textContent(String mTextContent, BuildContext context, bool isDetail) {
           ),
           MatchText(
               pattern: '全文',
-              //       pattern: r"\B#+([\w]+)\B#",
-              //   pattern: r"\[(#[^:]+):([^#]+)\]",
               style: TextStyle(
                 color: Color(0xff5B778D),
                 fontSize: 15,
@@ -289,7 +256,6 @@ Widget textContent(String mTextContent, BuildContext context, bool isDetail) {
                       title: new Text("Mentions clicked"),
                       content: new Text("点击全文了"),
                       actions: <Widget>[
-                        // usually buttons at the bottom of the dialog
                         new FlatButton(
                           child: new Text("Close"),
                           onPressed: () {},
@@ -303,9 +269,7 @@ Widget textContent(String mTextContent, BuildContext context, bool isDetail) {
       ));
 }
 
-//转发内容的布局
-Widget _RetWeetLayout(
-    BuildContext context, WeiboItemBean weiboItem, bool isDetail) {
+Widget _retWeetLayout(BuildContext context, WeiboItemBean weiboItem) {
   if (weiboItem.containZf) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
@@ -316,7 +280,7 @@ Widget _RetWeetLayout(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              textContent(
+              _textContent(
                   '[@' +
                       weiboItem.zfNick +
                       ':' +
@@ -324,11 +288,7 @@ Widget _RetWeetLayout(
                       ']' +
                       ":" +
                       weiboItem.zfContent,
-                  context,
-                  isDetail),
-              /*   Text(,
-                    style: TextStyle(color: Colors.black, fontSize: 12)),*/
-              // mVedioLayout(context, weiboItem.zfVedioUrl),
+                  context),
               _nineGrid(context, weiboItem.zfPicurl),
             ],
           )),
@@ -340,11 +300,9 @@ Widget _RetWeetLayout(
   }
 }
 
-//转发收藏点赞布局
-Widget _RePraCom(BuildContext context, WeiboItemBean weiboItem) {
+Widget _rePraCom(BuildContext context, WeiboItemBean weiboItem) {
   return Row(
     mainAxisSize: MainAxisSize.max,
-    //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: <Widget>[
       Container(
@@ -352,13 +310,7 @@ Widget _RePraCom(BuildContext context, WeiboItemBean weiboItem) {
       ),
       new Flexible(
         child: InkWell(
-          onTap: () {
-            // Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-            //   return RetWeetPage(
-            //     mModel: weiboItem,
-            //   );
-            // }));
-          },
+          onTap: () {},
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -366,7 +318,7 @@ Widget _RePraCom(BuildContext context, WeiboItemBean weiboItem) {
               LikeButton(
                 isLiked: weiboItem.zanStatus == 1,
                 onTap: (bool isLiked) {
-                  return onLikeButtonTapped(isLiked, weiboItem);
+                  return _onLikeButtonTapped(isLiked, weiboItem);
                 },
                 size: 21,
                 circleColor:
@@ -376,12 +328,7 @@ Widget _RePraCom(BuildContext context, WeiboItemBean weiboItem) {
                   dotSecondaryColor: Colors.deepOrange,
                 ),
                 likeBuilder: (bool isLiked) {
-                  return /*Icon(
-                    Icons.home,
-                    color: isLiked ? Colors.deepPurpleAccent : Colors.grey,
-                    size: 20,
-                  )*/
-                      ImageSourceUtil.getImageByPath(
+                  return ImageSourceUtil.getImageByPath(
                     isLiked
                         ? Constant.ASSETS_IMG + 'ic_home_liked.webp'
                         : Constant.ASSETS_IMG + 'ic_home_like.webp',
@@ -413,13 +360,7 @@ Widget _RePraCom(BuildContext context, WeiboItemBean weiboItem) {
       ),
       new Flexible(
         child: InkWell(
-          onTap: () {
-            // Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-            //   return RetWeetPage(
-            //     mModel: weiboItem,
-            //   );
-            // }));
-          },
+          onTap: () {},
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -441,13 +382,7 @@ Widget _RePraCom(BuildContext context, WeiboItemBean weiboItem) {
       ),
       new Flexible(
         child: InkWell(
-          onTap: () {
-            // Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-            //   return RetWeetPage(
-            //     mModel: weiboItem,
-            //   );
-            // }));
-          },
+          onTap: () {},
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -471,35 +406,8 @@ Widget _RePraCom(BuildContext context, WeiboItemBean weiboItem) {
   );
 }
 
-Future<bool> onLikeButtonTapped(bool isLiked, WeiboItemBean weiboItem) async {
+Future<bool> _onLikeButtonTapped(bool isLiked, WeiboItemBean weiboItem) async {
   final Completer<bool> completer = new Completer<bool>();
-
-  // FormData formData = FormData.fromMap({
-  //   "weiboId": weiboItem.weiboId,
-  //   "userId": UserUtil.getUserInfo().id,
-  //   "status": weiboItem.zanStatus == 0 ? 1 : 0, //1点赞,0取消点赞
-  // });
-  // DioManager.getInstance().post(ServiceUrl.zanWeiBo, formData, (data) {
-  //   if (weiboItem.zanStatus == 0) {
-  //     //点赞成功
-  //     weiboItem.zanStatus = 1;
-  //     weiboItem.likeNum++;
-  //     completer.complete(true);
-  //   } else {
-  //     //取消点赞成功
-  //     weiboItem.zanStatus = 0;
-  //     weiboItem.likeNum--;
-  //
-  //     completer.complete(false);
-  //   }
-  // }, (error) {
-  //   if (weiboItem.zanStatus == 0) {
-  //     completer.complete(false);
-  //   } else {
-  //     completer.complete(true);
-  //   }
-  // });
-
   return completer.future;
 }
 
