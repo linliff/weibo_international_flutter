@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:weibo_international_flutter/Constant.dart';
-import 'package:weibo_international_flutter/main/message/MessagePage.dart';
 import 'package:weibo_international_flutter/main/discover/DiscoverPage.dart';
 import 'package:weibo_international_flutter/main/home/HomePage.dart';
+import 'package:weibo_international_flutter/main/message/MessagePage.dart';
 import 'package:weibo_international_flutter/utils/ImageSourceUtil.dart';
 
 ///首页最外层的壳子
@@ -12,6 +12,10 @@ class IndexPage extends StatefulWidget {
 }
 
 class IndexPageState extends State<IndexPage> {
+  static const double INDEX_HOME = 0;
+  static const double INDEX_DISCOVER = 1.0;
+  static const double INDEX_MESSAGE = 2.0;
+
   int currentIndex = 0;
   var tabImages;
   var title = "全部";
@@ -23,6 +27,17 @@ class IndexPageState extends State<IndexPage> {
   void initState() {
     super.initState();
     controller = PageController(initialPage: 0);
+    controller.addListener(() {
+      var index = controller.page;
+      print("page scroll index $index");
+      if (index == INDEX_HOME) {
+        title = "全部";
+      } else if (index == INDEX_DISCOVER) {
+        title = "探索";
+      } else if (index == INDEX_MESSAGE) {
+        title = "消息提醒";
+      }
+    });
   }
 
   @override
@@ -43,7 +58,9 @@ class IndexPageState extends State<IndexPage> {
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
             backgroundColor: Colors.red,
-            onPressed: () {},
+            onPressed: () {
+              _showDialog();
+            },
           ),
           drawer: _buildLeftDrawer(),
           appBar: AppBar(
@@ -54,7 +71,6 @@ class IndexPageState extends State<IndexPage> {
             type: BottomNavigationBarType.fixed,
             currentIndex: currentIndex,
             onTap: (index) {
-              // title = "aaa" + '${index}';
               controller.jumpToPage(index);
             },
           ),
@@ -174,5 +190,27 @@ class IndexPageState extends State<IndexPage> {
                 )),
           ),
         ]);
+  }
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("编写你的第一条微博吧！"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
